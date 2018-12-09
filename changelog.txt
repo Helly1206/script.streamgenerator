@@ -1,4 +1,7 @@
 CHANGELOG
 
+0.9.1: From Kodi 18 
+- Converted to python 3 for future compatibility
+
 0.9.0:
 - Initial Release 

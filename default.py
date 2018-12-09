@@ -1,3 +1,6 @@
+from future import standard_library
+standard_library.install_aliases()
+from builtins import object
 import os
 import xbmc
 import xbmcaddon
@@ -6,7 +9,7 @@ import xbmcvfs
 from xbmc import getCondVisibility as condition, translatePath as translate, log as xbmc_log
 from subprocess import PIPE, Popen
 import re
-import urlparse
+import urllib.parse
 import shutil
 
 __scriptdebug__ = False
@@ -52,7 +55,7 @@ STREAM_FILE=-3
 
 __favorites_filename__ = 'favourites.xml'
 
-class Stream:
+class Stream(object):
     Name = None
     Thumb = None
     URL = None
@@ -215,10 +218,10 @@ def getURLFromFile(filename):
 
 def ValidateURL(url):
     myurl=url
-    result=urlparse.urlparse(url)
+    result=urllib.parse.urlparse(url)
     if (not result.scheme): # if not scheme, set http:// in front ....
         url="http://%s"%url
-        result=urlparse.urlparse(url)
+        result=urllib.parse.urlparse(url)
     if (not result.scheme or not result.netloc): 
         writeLog("invalid Stream URL: " + myurl)
         url=None
