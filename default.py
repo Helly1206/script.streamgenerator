@@ -1,6 +1,3 @@
-from future import standard_library
-standard_library.install_aliases()
-from builtins import object
 import os
 import xbmc
 import xbmcaddon
@@ -9,7 +6,11 @@ import xbmcvfs
 from xbmc import getCondVisibility as condition, translatePath as translate, log as xbmc_log
 from subprocess import PIPE, Popen
 import re
-import urllib.parse
+import sys
+if sys.version_info[0] < 3:
+    import urlparse
+else:
+    import urllib.parse as urlparse
 import shutil
 
 __scriptdebug__ = False
@@ -218,10 +219,10 @@ def getURLFromFile(filename):
 
 def ValidateURL(url):
     myurl=url
-    result=urllib.parse.urlparse(url)
+    result=urlparse.urlparse(url)
     if (not result.scheme): # if not scheme, set http:// in front ....
         url="http://%s"%url
-        result=urllib.parse.urlparse(url)
+        result=urlparse.urlparse(url)
     if (not result.scheme or not result.netloc): 
         writeLog("invalid Stream URL: " + myurl)
         url=None
